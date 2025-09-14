@@ -18,6 +18,7 @@ namespace MiniAdventureGame
         public int PlayerDamage;
         public int PlayerSpeed;
         public int PlayerGold = 0;
+        public bool CanRest = true;
 
 
         //Constructor
@@ -39,20 +40,49 @@ namespace MiniAdventureGame
         }
 
         //Methods
-        
-        public void ChooseClass(Player p)
+        public void LevelUp(Player p)
         {
-            //??????????????????
-
-
-            while (true)
+            if (p.PlayerXp >= p.PlayerMaxXp)
             {
+                p.PlayerHealth = p.PlayerMaxHealth; //Reset Health
 
+                p.PlayerLevel += 1;
+                p.PlayerXp -= p.PlayerMaxXp;
+                p.PlayerMaxXp += 50;
 
-
+                if (p.PlayerClass == "Mage")
+                {
+                    p.PlayerHealth += 2;
+                    p.PlayerMaxHealth += 2;
+                    p.PlayerDamage += 2;
+                }
+                else if (p.PlayerClass == "Warrior")
+                {
+                    p.PlayerHealth += 4;
+                    p.PlayerMaxHealth += 4;
+                    p.PlayerDamage += 2;
+                }
+                else
+                {
+                    p.PlayerHealth += 3;
+                    p.PlayerMaxHealth += 3;
+                    p.PlayerDamage += 3;
+                }
+                Console.WriteLine(new string ('-', 50));
+                Console.WriteLine("You level up!");
+                Console.WriteLine("Health is restored...");
                 Console.WriteLine(new string('-', 50));
 
-                Console.WriteLine("Choose your class (Warrior, Rogue, Mage):");
+                p.DisplayStats(p);
+            }
+        }
+        public void ChooseClass(Player p)
+        {
+            while (true)
+            {
+                Console.WriteLine(new string('-', 50));
+
+                Console.WriteLine("Choose your class (Warrior, Rouge, Mage):");
 
                 Console.WriteLine(new string('-', 50));
 
@@ -68,9 +98,8 @@ namespace MiniAdventureGame
                     p.PlayerDamage = 8;
                     p.PlayerSpeed = 2;
                     break;
-
                 }
-                else if (p.PlayerClass == "rogue")
+                else if (p.PlayerClass == "rouge")
                 {
                     p.PlayerClass = "Rouge";
                     p.PlayerHealth = 25;
@@ -78,7 +107,6 @@ namespace MiniAdventureGame
                     p.PlayerDamage = 10;
                     p.PlayerSpeed = 5;
                     break;
-
                 }
                 else if (p.PlayerClass == "mage")
                 {
@@ -88,7 +116,6 @@ namespace MiniAdventureGame
                     p.PlayerDamage = 7;
                     p.PlayerSpeed = 3;
                     break;
-
                 }
                 else
                 {
@@ -113,12 +140,45 @@ namespace MiniAdventureGame
             Console.WriteLine($"Gold: {p.PlayerGold}");
             Console.WriteLine(new string('=', 50));
 
-            Console.WriteLine("Press any key to contuine...");
+            Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
 
         }
 
+        public void Rest(Player p)
+        {
+            if (CanRest)
+            {
+                Console.WriteLine(new string('=', 50));
+                while (p.PlayerHealth < p.PlayerMaxHealth)
+                {
+                    p.PlayerHealth += 10;
+
+                    if (p.PlayerHealth > p.PlayerMaxHealth)
+                    {
+                        p.PlayerHealth = p.PlayerMaxHealth;
+                    }
+                }
+
+                if (p.PlayerHealth == p.PlayerMaxHealth)
+                {
+                    Console.WriteLine("You are already fully healed!");
+                }
+                else
+                {
+                    Console.WriteLine("You took a moment to rest...");
+                    Console.WriteLine("You gained 10 HP!");
+                }
 
 
+                Console.WriteLine($"Current HP: {p.PlayerHealth}/{p.PlayerMaxHealth}");
+                Console.WriteLine(new string('=', 50));
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+            }
+            
+        }
     }
+
+}
 }

@@ -56,14 +56,49 @@ namespace MiniAdventureGame
                 Console.WriteLine("[2] Rest");
                 Console.WriteLine("[3] Player status");
                 Console.WriteLine("[4] Exit the dungeon");
-                Console.WriteLine(new string('-', 50));
+                Console.WriteLine(new string('=', 50));
 
                 int choice = int.Parse(Console.ReadLine());
 
                 switch (choice)
                 {
                     case 1:
-                        Console.WriteLine("You walked deeper into the dungeon..."); //Random, möta fiende, hitta loot, hitta inget.
+                        Console.Clear();
+                        Console.WriteLine("You venture deeper into the dungeon...");
+                        Console.WriteLine(new string('-', 50));
+
+                        Random random = new Random();
+                        int encounterChance = random.Next(1, 101);
+
+                        if (encounterChance <= 70)
+                        {
+                            GameMechanics.Encounter(player, enemies);
+                        }
+                        else
+                        {
+                            int lootChance = random.Next(1, 101);
+
+                            if (lootChance <= 60)
+                            {
+                                int goldFound = random.Next(3, 11);
+                                player.PlayerGold += goldFound;
+                                Console.WriteLine($"You found a chest with {goldFound} gold pieces!");
+                            } else if (lootChance > 60 && lootChance <= 70)
+                            {
+                                int healAmount = random.Next(5, 11);
+                                player.PlayerHealth += healAmount;
+
+                                if (player.PlayerHealth > player.PlayerMaxHealth)
+                                {
+                                    player.PlayerHealth = player.PlayerMaxHealth;
+                                }
+
+                                Console.WriteLine($"You found a small health potion and healed {healAmount} health!");
+                                Console.WriteLine($"Current health: {player.PlayerHealth}/{player.PlayerMaxHealth}");
+                                Console.WriteLine("Press any key to continue...");
+                                Console.ReadKey();
+                            }
+                        }
                         break;
                     case 2:
                         //Healar x antal (går bara att göra en gång) if took heal cant until adventure
@@ -75,10 +110,21 @@ namespace MiniAdventureGame
                         break;
                     case 4:
                         Console.WriteLine("You exit the dungeon.");
+                        Console.WriteLine("Thanks for playing! Press any key to continue...");
                         gameRunning = false;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid input, try again...");
                         break;
 
                 }
+
+                if (player.PlayerHealth <= 0)
+                {
+                    GameMechanics.GameOver(player);
+                    gameRunning = false;
+                }
+
 
             }
 
