@@ -34,13 +34,10 @@ namespace MiniAdventureGame
             PlayerDamage = playerDamage;
             PlayerSpeed = playerSpeed;
             PlayerGold = playerGold;
-
-            //MaxXp kanske onödig? köra ex if ( playerXp > 100 ) = Level 2 typ osv (kanske inte en if stats? switch?)
-
         }
 
         //Methods
-        public void LevelUp(Player p)
+        public void LevelUp(Player p, Enemy[] enemies)
         {
             if (p.PlayerXp >= p.PlayerMaxXp)
             {
@@ -74,6 +71,7 @@ namespace MiniAdventureGame
                 Console.WriteLine(new string('-', 50));
 
                 p.DisplayStats(p);
+                enemies[0].EnemyLevelUp(enemies);
             }
         }
         public void ChooseClass(Player p)
@@ -81,14 +79,14 @@ namespace MiniAdventureGame
             while (true)
             {
                 Console.WriteLine(new string('-', 50));
-
-                Console.WriteLine("Choose your class (Warrior, Rouge, Mage):");
-
+                Console.WriteLine("Choose your class!");
+                Console.WriteLine();
+                Console.WriteLine("Warrior: High HP, Medium Damage, Slow");
+                Console.WriteLine("Rouge: Low HP, High Damage, Fast");
+                Console.WriteLine("Mage: Balanced");
                 Console.WriteLine(new string('-', 50));
 
-
                 p.PlayerClass = Console.ReadLine().ToLower();
-
 
                 if (p.PlayerClass == "warrior")
                 {
@@ -126,7 +124,6 @@ namespace MiniAdventureGame
                 Console.WriteLine($"You chose {p.PlayerClass}!");
                 Console.WriteLine(new string('-', 50));
             }
-
         }
 
         public void DisplayStats(Player p)
@@ -147,19 +144,9 @@ namespace MiniAdventureGame
 
         public void Rest(Player p)
         {
-            if (CanRest)
+            if (CanRest == true)
             {
                 Console.WriteLine(new string('=', 50));
-                while (p.PlayerHealth < p.PlayerMaxHealth)
-                {
-                    p.PlayerHealth += 10;
-
-                    if (p.PlayerHealth > p.PlayerMaxHealth)
-                    {
-                        p.PlayerHealth = p.PlayerMaxHealth;
-                    }
-                }
-
                 if (p.PlayerHealth == p.PlayerMaxHealth)
                 {
                     Console.WriteLine("You are already fully healed!");
@@ -170,15 +157,21 @@ namespace MiniAdventureGame
                     Console.WriteLine("You gained 10 HP!");
                 }
 
+                if (p.PlayerHealth < p.PlayerMaxHealth)
+                {
+                    p.PlayerHealth += 10;
 
+                    if (p.PlayerHealth > p.PlayerMaxHealth)
+                    {
+                        p.PlayerHealth = p.PlayerMaxHealth;
+                    }
+                }
                 Console.WriteLine($"Current HP: {p.PlayerHealth}/{p.PlayerMaxHealth}");
                 Console.WriteLine(new string('=', 50));
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
-            }
-            
+            }  
         }
     }
+}
 
-}
-}

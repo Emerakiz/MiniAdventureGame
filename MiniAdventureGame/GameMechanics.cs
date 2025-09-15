@@ -14,7 +14,7 @@ namespace MiniAdventureGame
             string Title = "Dungeon Adventure Game";
 
             Console.WriteLine($"Welcome to the {Title}!");
-            Console.WriteLine(new string('=', 30));
+            Console.WriteLine(new string('=', 50));
             Console.WriteLine("");
 
 
@@ -27,7 +27,7 @@ namespace MiniAdventureGame
 
 
             Console.WriteLine("");
-            Console.WriteLine(new string('=', 30));
+            Console.WriteLine(new string('=', 50));
             Console.WriteLine("Press any key to start your adventure!");
             Console.ReadKey();
             Console.Clear();
@@ -37,20 +37,36 @@ namespace MiniAdventureGame
         {
             Console.WriteLine("You have been defeated...");
             player.DisplayStats(player);
-            Console.WriteLine("Better luck next time! Press any key to exit...");
-
-            Console.ReadKey();
+            Console.WriteLine("Better luck next time!");
         }
 
         public static void Encounter(Player player, Enemy[] enemies)
         {
-
             Random random = new Random();
-            int index = random.Next(0, enemies.Length);
 
-            Enemy enemy = enemies[index];
+            int index = random.Next(0, enemies.Length);
+            Enemy enemy = enemies[index].Clone();
 
             Console.Clear();
+
+            //Chance for meeting stronger enemy
+            if (player.PlayerLevel >= 2)
+            {
+                int chance = random.Next(0,100);
+                if (chance < 25)
+                {
+                    enemy.EnemyLevel += 1;
+                    enemy.EnemyHealth += 3;
+                    enemy.EnemyMaxHealth += 3;
+                    enemy.EnemyDamage += 2;
+                    enemy.GoldReward += 5;
+                    Console.WriteLine("Something strong is approching...");
+
+                    Thread.Sleep(1000);
+                }
+            }
+
+            
             Console.WriteLine($"A level {enemy.EnemyLevel} {enemy.Type} appears!");
             Console.WriteLine("What will you do?");
             Console.WriteLine(new string('=', 50));
@@ -95,12 +111,14 @@ namespace MiniAdventureGame
         {
             Console.Clear();
             Console.WriteLine("You chose to fight!");
+            Thread.Sleep(1000);
 
             bool isFighting = true;
 
             while (isFighting)
             {
                 Console.Clear();
+                Console.WriteLine($"   = {enemy.Type} Lvl {enemy.EnemyLevel} =");
                 Console.WriteLine("= What will you do? =");
                 Console.WriteLine("[1] Attack");
                 Console.WriteLine("[2] Rest");
@@ -125,8 +143,7 @@ namespace MiniAdventureGame
                             player.PlayerXp += enemy.XpReward;
                             player.PlayerGold += enemy.GoldReward;
                             Console.WriteLine($"You gained {enemy.XpReward} XP and {enemy.GoldReward} Gold!");
-                            Console.WriteLine("Press any key to continue...");
-                            Console.ReadKey();
+                            
 
                             isFighting = false;
                         }
@@ -135,6 +152,8 @@ namespace MiniAdventureGame
                             EnemyAttack(player, enemy);
                         }
 
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
                         player.CanRest = true;
 
                         break;
@@ -146,7 +165,20 @@ namespace MiniAdventureGame
                         player.DisplayStats(player);
                         break;
                     case 4:
-                        //Flee
+                        Console.Clear();
+
+                        player.PlayerHealth -= 5;
+                        player.PlayerGold -= 5;
+
+                        if (player.PlayerGold < 0)
+                        {
+                            player.PlayerGold = 0;
+                        }
+
+                        Console.WriteLine("You fled the battle!");
+                        Console.WriteLine("You lost 5 HP and 5 gold pieces.");
+                        Console.WriteLine("Press any key to continue...");
+                        Console.ReadKey();
                         isFighting = false;
                         break;
                     default:
@@ -160,13 +192,7 @@ namespace MiniAdventureGame
                     isFighting = false;
                     GameOver(player);
                 }
-                else
-                {
-                    Console.WriteLine($"Your HP: {player.PlayerHealth}/{player.PlayerMaxHealth}");
-                    Console.WriteLine($"{enemy.Type} HP: {enemy.EnemyHealth}/{enemy.EnemyMaxHealth}");
-                    Console.WriteLine("Press any key to continue...");
-                    Console.ReadKey();
-                }
+                
             }
         }
 
@@ -176,6 +202,9 @@ namespace MiniAdventureGame
             Console.WriteLine($"The {enemy.Type} dealt {enemy.EnemyDamage} damage to you!");
 
             Console.WriteLine(new string('-', 50));
+
+            Console.WriteLine($"Your HP: {player.PlayerHealth}/{player.PlayerMaxHealth}");
+            Console.WriteLine($"{enemy.Type} HP: {enemy.EnemyHealth}/{enemy.EnemyMaxHealth}");
         }
     }
 }

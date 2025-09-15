@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Dynamic;
+using System.Numerics;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
@@ -25,7 +26,7 @@ namespace MiniAdventureGame
             
 
             //Player
-            Player player = new Player("Unknown", "Unknown", 1, 0, 100, 0, 0, 0, 0, 0);
+            Player player = new Player("Unknown", "Unknown", 1, 0, 50, 0, 0, 0, 0, 0);
 
 
             //Game start
@@ -93,7 +94,7 @@ namespace MiniAdventureGame
                                     player.PlayerHealth = player.PlayerMaxHealth;
                                 }
 
-                                Console.WriteLine($"You found a small health potion and healed {healAmount} health!");
+                                Console.WriteLine($"You found a small health potion and healed {healAmount} HP!");
                                 Console.WriteLine($"Current health: {player.PlayerHealth}/{player.PlayerMaxHealth}");
                                 Console.WriteLine("Press any key to continue...");
                                 Console.ReadKey();
@@ -101,8 +102,8 @@ namespace MiniAdventureGame
                         }
                         break;
                     case 2:
-                        //Healar x antal (går bara att göra en gång) if took heal cant until adventure
-                        GameMechanics.Rest(player);
+                        player.Rest(player);
+                        player.CanRest = false;
                         break;
                     case 3:
                         Console.Clear();
@@ -125,7 +126,7 @@ namespace MiniAdventureGame
                     gameRunning = false;
                 }
 
-
+                player.LevelUp(player, enemies);
             }
 
            
