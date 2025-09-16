@@ -65,13 +65,14 @@ namespace MiniAdventureGame
                     p.PlayerMaxHealth += 3;
                     p.PlayerDamage += 3;
                 }
+                Console.Clear();
                 Console.WriteLine(new string ('-', 50));
                 Console.WriteLine("You level up!");
                 Console.WriteLine("Health is restored...");
                 Console.WriteLine(new string('-', 50));
 
-                p.DisplayStats(p);
                 enemies[0].EnemyLevelUp(enemies);
+                p.DisplayStats(p);
             }
         }
         public void ChooseClass(Player p)
@@ -79,8 +80,7 @@ namespace MiniAdventureGame
             while (true)
             {
                 Console.WriteLine(new string('-', 50));
-                Console.WriteLine("Choose your class!");
-                Console.WriteLine();
+                Console.WriteLine("Choose your class! (Warrior, Rouge, Mage)");
                 Console.WriteLine("Warrior: High HP, Medium Damage, Slow");
                 Console.WriteLine("Rouge: Low HP, High Damage, Fast");
                 Console.WriteLine("Mage: Balanced");
@@ -170,6 +170,14 @@ namespace MiniAdventureGame
                 Console.WriteLine(new string('=', 50));
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
+
+                CanRest = false;
+            } else
+            {
+                Console.WriteLine("You have already rested, venture into the dungeon before resting again!");
+                Console.WriteLine("Press any key to continue...");
+                Console.ReadKey();
+                return;
             }  
         }
     }

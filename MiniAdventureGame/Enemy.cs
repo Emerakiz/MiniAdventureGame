@@ -20,7 +20,6 @@ namespace MiniAdventureGame
         //Constructor
         public Enemy(int enemyLevel, int enemyHealth, int enemyMaxHealth, int enemyDamage, int enemySpeed, int goldReward, int xpReward)
         {
-
             EnemyLevel = enemyLevel;
             EnemyHealth = enemyHealth;
             EnemyMaxHealth = enemyMaxHealth;
@@ -28,7 +27,6 @@ namespace MiniAdventureGame
             EnemySpeed = enemySpeed;
             GoldReward = goldReward;
             XpReward = xpReward;
-
         }
 
         //Methods
@@ -57,8 +55,7 @@ namespace MiniAdventureGame
                 e.EnemyHealth += 3; 
                 e.EnemyMaxHealth += 3;
                 e.EnemyDamage += 2;
-                e.GoldReward += 5;
-
+                e.GoldReward += 2;
             }
         }
     }

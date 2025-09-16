@@ -6,14 +6,12 @@ namespace MiniAdventureGame
 {
     public static class GameMechanics
     {
-
-
-
         public static void GameStart()
         {
             string Title = "Dungeon Adventure Game";
-
+            Console.ForegroundColor = ConsoleColor.Yellow;
             Console.WriteLine($"Welcome to the {Title}!");
+            Console.ResetColor();
             Console.WriteLine(new string('=', 50));
             Console.WriteLine("");
 
@@ -58,7 +56,7 @@ namespace MiniAdventureGame
                     enemy.EnemyLevel += 1;
                     enemy.EnemyHealth += 3;
                     enemy.EnemyMaxHealth += 3;
-                    enemy.EnemyDamage += 2;
+                    enemy.EnemyDamage += 4;
                     enemy.GoldReward += 5;
                     Console.WriteLine("Something strong is approching...");
 
@@ -66,7 +64,6 @@ namespace MiniAdventureGame
                 }
             }
 
-            
             Console.WriteLine($"A level {enemy.EnemyLevel} {enemy.Type} appears!");
             Console.WriteLine("What will you do?");
             Console.WriteLine(new string('=', 50));
@@ -118,7 +115,7 @@ namespace MiniAdventureGame
             while (isFighting)
             {
                 Console.Clear();
-                Console.WriteLine($"   = {enemy.Type} Lvl {enemy.EnemyLevel} =");
+                Console.WriteLine($"== {enemy.Type} Lvl {enemy.EnemyLevel} ==");
                 Console.WriteLine("= What will you do? =");
                 Console.WriteLine("[1] Attack");
                 Console.WriteLine("[2] Rest");

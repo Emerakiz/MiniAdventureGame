@@ -5,16 +5,10 @@ using System.Xml.Linq;
 
 namespace MiniAdventureGame
 {
-    
-
-
     internal class Program
     {
         static void Main(string[] args)
         {
-
-
-
             //Enemies
             Enemy[] enemies = new Enemy[] {
                 new Enemy(1, 7, 10, 3, 5, 4, 10) { Type = "Goblin" },
@@ -23,18 +17,14 @@ namespace MiniAdventureGame
                 new Enemy(1, 15, 15, 4, 2, 6, 15) { Type = "Skeleton" }
             };  
 
-            
-
             //Player
             Player player = new Player("Unknown", "Unknown", 1, 0, 50, 0, 0, 0, 0, 0);
-
 
             //Game start
             GameMechanics.GameStart();
             Console.WriteLine("Enter your character's name:");
             Console.WriteLine(new string('-', 50));
             player.Name = Console.ReadLine();
-
 
             player.ChooseClass(player);
             player.DisplayStats(player);
@@ -44,14 +34,12 @@ namespace MiniAdventureGame
             Console.WriteLine("Press any key to enter..");
             Console.ReadKey();
 
-
             //Game loop
             bool gameRunning = true;
 
             while (gameRunning)
             {
                 Console.Clear();
-
                 Console.WriteLine("= What you wanna do? =");
                 Console.WriteLine("[1] Adventure deeper");
                 Console.WriteLine("[2] Rest");
@@ -61,7 +49,7 @@ namespace MiniAdventureGame
 
                 int choice = int.Parse(Console.ReadLine());
 
-                switch (choice)
+                switch (choice) //Ändra färg på alla Press any key to blah blah
                 {
                     case 1:
                         Console.Clear();
