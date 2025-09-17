@@ -67,7 +67,9 @@ namespace MiniAdventureGame
                 }
                 Console.Clear();
                 Console.WriteLine(new string ('-', 50));
+                Console.ForegroundColor = ConsoleColor.Green;
                 Console.WriteLine("You level up!");
+                Console.ResetColor();
                 Console.WriteLine("Health is restored...");
                 Console.WriteLine(new string('-', 50));
 
@@ -80,7 +82,9 @@ namespace MiniAdventureGame
             while (true)
             {
                 Console.WriteLine(new string('-', 50));
+                Console.ForegroundColor = ConsoleColor.DarkMagenta;
                 Console.WriteLine("Choose your class! (Warrior, Rouge, Mage)");
+                Console.ResetColor();
                 Console.WriteLine("Warrior: High HP, Medium Damage, Slow");
                 Console.WriteLine("Rouge: Low HP, High Damage, Fast");
                 Console.WriteLine("Mage: Balanced");
@@ -117,19 +121,25 @@ namespace MiniAdventureGame
                 }
                 else
                 {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
                     Console.WriteLine("Invalid class selection. Please choose Warrior, Rogue, or Mage.");
+                    Console.ResetColor();
                 }
-
-                Console.WriteLine(new string('-', 50));
-                Console.WriteLine($"You chose {p.PlayerClass}!");
-                Console.WriteLine(new string('-', 50));
             }
+            Console.Clear();
+            Console.WriteLine(new string('-', 50));
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine($"You chose {p.PlayerClass}!");
+            Console.ResetColor();
+            
         }
 
         public void DisplayStats(Player p)
         {
             Console.WriteLine(new string('=', 50));
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
             Console.WriteLine($"{p.Name} the {p.PlayerClass}!");
+            Console.ResetColor();
             Console.WriteLine($"Level: {p.PlayerLevel} ({p.PlayerXp}/{p.PlayerMaxXp}xp)");
             Console.WriteLine($"Health: {p.PlayerHealth}/{p.PlayerMaxHealth}");
             Console.WriteLine($"Damage: {p.PlayerDamage}");
@@ -137,8 +147,10 @@ namespace MiniAdventureGame
             Console.WriteLine($"Gold: {p.PlayerGold}");
             Console.WriteLine(new string('=', 50));
 
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
+            Console.ResetColor();
 
         }
 
@@ -154,7 +166,9 @@ namespace MiniAdventureGame
                 else
                 {
                     Console.WriteLine("You took a moment to rest...");
+                    Console.ForegroundColor = ConsoleColor.Green;
                     Console.WriteLine("You gained 10 HP!");
+                    Console.ResetColor();
                 }
 
                 if (p.PlayerHealth < p.PlayerMaxHealth)
@@ -168,14 +182,18 @@ namespace MiniAdventureGame
                 }
                 Console.WriteLine($"Current HP: {p.PlayerHealth}/{p.PlayerMaxHealth}");
                 Console.WriteLine(new string('=', 50));
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Press any key to continue...");
+                Console.ResetColor();
                 Console.ReadKey();
 
                 CanRest = false;
             } else
             {
                 Console.WriteLine("You have already rested, venture into the dungeon before resting again!");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Press any key to continue...");
+                Console.ResetColor();
                 Console.ReadKey();
                 return;
             }  

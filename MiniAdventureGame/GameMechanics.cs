@@ -26,14 +26,18 @@ namespace MiniAdventureGame
 
             Console.WriteLine("");
             Console.WriteLine(new string('=', 50));
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Press any key to start your adventure!");
+            Console.ResetColor();
             Console.ReadKey();
             Console.Clear();
         }
 
         public static void GameOver(Player player)
         {
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.WriteLine("You have been defeated...");
+            Console.ResetColor();
             player.DisplayStats(player);
             Console.WriteLine("Better luck next time!");
         }
@@ -58,7 +62,10 @@ namespace MiniAdventureGame
                     enemy.EnemyMaxHealth += 3;
                     enemy.EnemyDamage += 4;
                     enemy.GoldReward += 5;
-                    Console.WriteLine("Something strong is approching...");
+
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
+                    Console.WriteLine("⚠️Something strong is approching...⚠️");
+                    Console.ResetColor();
 
                     Thread.Sleep(1000);
                 }
@@ -81,8 +88,10 @@ namespace MiniAdventureGame
 
                 Console.WriteLine("You fled the battle!");
                 Console.WriteLine("You took 5 damage and lost 2 Gold.");
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Press any key to continue...");
                 Console.ReadKey();
+                Console.ResetColor();
 
                 if (player.PlayerGold < 0)
                 {
@@ -96,7 +105,9 @@ namespace MiniAdventureGame
             }
             else
             {
+                Console.ForegroundColor = ConsoleColor.DarkYellow;
                 Console.WriteLine("Invalid input, try again...Press any key to continue");
+                Console.ResetColor();
                 Console.ReadKey();
                 return;
             }
@@ -115,7 +126,7 @@ namespace MiniAdventureGame
             while (isFighting)
             {
                 Console.Clear();
-                Console.WriteLine($"== {enemy.Type} Lvl {enemy.EnemyLevel} ==");
+                Console.WriteLine($"=⚔️= {enemy.Type} Lvl {enemy.EnemyLevel} =⚔️=");
                 Console.WriteLine("= What will you do? =");
                 Console.WriteLine("[1] Attack");
                 Console.WriteLine("[2] Rest");
@@ -136,11 +147,13 @@ namespace MiniAdventureGame
 
                         if (enemy.EnemyHealth <= 0)
                         {
-                            Console.WriteLine($"You defeated the {enemy.Type}!");
                             player.PlayerXp += enemy.XpReward;
                             player.PlayerGold += enemy.GoldReward;
+
+                            Console.ForegroundColor = ConsoleColor.Green;
+                            Console.WriteLine($"You defeated the {enemy.Type}!");
                             Console.WriteLine($"You gained {enemy.XpReward} XP and {enemy.GoldReward} Gold!");
-                            
+                            Console.ResetColor();
 
                             isFighting = false;
                         }
@@ -149,7 +162,9 @@ namespace MiniAdventureGame
                             EnemyAttack(player, enemy);
                         }
 
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Press any key to continue...");
+                        Console.ResetColor();
                         Console.ReadKey();
                         player.CanRest = true;
 
@@ -159,6 +174,7 @@ namespace MiniAdventureGame
                         EnemyAttack(player, enemy);
                         break;
                     case 3:
+                        enemy.EnemyDisplayStats(enemy);
                         player.DisplayStats(player);
                         break;
                     case 4:
@@ -173,8 +189,11 @@ namespace MiniAdventureGame
                         }
 
                         Console.WriteLine("You fled the battle!");
+                        Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine("You lost 5 HP and 5 gold pieces.");
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Press any key to continue...");
+                        Console.ResetColor();
                         Console.ReadKey();
                         isFighting = false;
                         break;

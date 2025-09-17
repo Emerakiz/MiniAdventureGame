@@ -39,6 +39,7 @@ namespace MiniAdventureGame
         }
         public void EnemyDisplayStats(Enemy enemies)
         {
+            Console.WriteLine(new string('=', 50));
             Console.WriteLine($"Type: {enemies.Type}");
             Console.WriteLine($"Level: {enemies.EnemyLevel}");
             Console.WriteLine($"Health: {enemies.EnemyHealth}/{enemies.EnemyMaxHealth}");
@@ -47,7 +48,9 @@ namespace MiniAdventureGame
 
         public void EnemyLevelUp(Enemy[] enemies)
         {
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("Enemies grew stronger!");
+            Console.ResetColor();
 
             foreach (Enemy e in enemies)
             {

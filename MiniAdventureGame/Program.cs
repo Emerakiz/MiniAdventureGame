@@ -31,8 +31,10 @@ namespace MiniAdventureGame
             Console.Clear();
 
             Console.WriteLine("Ready to adventure the dungeon?");
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine("Press any key to enter..");
             Console.ReadKey();
+            Console.ResetColor();
 
             //Game loop
             bool gameRunning = true;
@@ -49,7 +51,7 @@ namespace MiniAdventureGame
 
                 int choice = int.Parse(Console.ReadLine());
 
-                switch (choice) //Ändra färg på alla Press any key to blah blah
+                switch (choice) 
                 {
                     case 1:
                         Console.Clear();
@@ -84,7 +86,9 @@ namespace MiniAdventureGame
 
                                 Console.WriteLine($"You found a small health potion and healed {healAmount} HP!");
                                 Console.WriteLine($"Current health: {player.PlayerHealth}/{player.PlayerMaxHealth}");
+                                Console.ForegroundColor = ConsoleColor.DarkYellow;
                                 Console.WriteLine("Press any key to continue...");
+                                Console.ResetColor();
                                 Console.ReadKey();
                             }
                         }
@@ -99,11 +103,14 @@ namespace MiniAdventureGame
                         break;
                     case 4:
                         Console.WriteLine("You exit the dungeon.");
-                        Console.WriteLine("Thanks for playing! Press any key to continue...");
+                        Console.WriteLine("Thanks for playing!");
                         gameRunning = false;
                         break;
                     default:
-                        Console.WriteLine("Invalid input, try again...");
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
+                        Console.WriteLine("Invalid input, try again...Press any key to continue...");
+                        Console.ResetColor();
+                        Console.ReadKey();
                         break;
 
                 }
