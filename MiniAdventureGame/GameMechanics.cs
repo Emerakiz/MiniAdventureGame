@@ -126,7 +126,9 @@ namespace MiniAdventureGame
             while (isFighting)
             {
                 Console.Clear();
-                Console.WriteLine($"=⚔️= {enemy.Type} Lvl {enemy.EnemyLevel} =⚔️=");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine($"== {enemy.Type} Level {enemy.EnemyLevel} ==");
+                Console.ResetColor();
                 Console.WriteLine("= What will you do? =");
                 Console.WriteLine("[1] Attack");
                 Console.WriteLine("[2] Rest");
@@ -134,7 +136,14 @@ namespace MiniAdventureGame
                 Console.WriteLine("[4] Flee");
                 Console.WriteLine(new string('=', 50));
 
-                int choice = int.Parse(Console.ReadLine());
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out int choice))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("Invalid input, please enter a number...Press any key to continue...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                }
 
                 switch (choice)
                 {
@@ -198,8 +207,10 @@ namespace MiniAdventureGame
                         isFighting = false;
                         break;
                     default:
+                        Console.ForegroundColor = ConsoleColor.DarkYellow;
                         Console.WriteLine("Invalid input, try again... Press any key to continue...");
                         Console.ReadKey();
+                        Console.ResetColor();
                         break;
                 }
 

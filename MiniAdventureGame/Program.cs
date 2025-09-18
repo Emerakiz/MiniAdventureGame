@@ -49,7 +49,14 @@ namespace MiniAdventureGame
                 Console.WriteLine("[4] Exit the dungeon");
                 Console.WriteLine(new string('=', 50));
 
-                int choice = int.Parse(Console.ReadLine());
+                string input = Console.ReadLine();
+                if (!int.TryParse(input, out int choice))
+                {
+                    Console.ForegroundColor = ConsoleColor.DarkYellow;
+                    Console.WriteLine("Invalid input, please enter a number...Press any key to continue...");
+                    Console.ResetColor();
+                    Console.ReadKey();
+                }
 
                 switch (choice) 
                 {
@@ -73,7 +80,9 @@ namespace MiniAdventureGame
                             {
                                 int goldFound = random.Next(3, 11);
                                 player.PlayerGold += goldFound;
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine($"You found a chest with {goldFound} gold pieces!");
+                                Console.ResetColor();
                             } else if (lootChance > 60 && lootChance <= 70)
                             {
                                 int healAmount = random.Next(5, 11);
@@ -83,8 +92,9 @@ namespace MiniAdventureGame
                                 {
                                     player.PlayerHealth = player.PlayerMaxHealth;
                                 }
-
+                                Console.ForegroundColor = ConsoleColor.Green;
                                 Console.WriteLine($"You found a small health potion and healed {healAmount} HP!");
+                                Console.ResetColor();
                                 Console.WriteLine($"Current health: {player.PlayerHealth}/{player.PlayerMaxHealth}");
                                 Console.ForegroundColor = ConsoleColor.DarkYellow;
                                 Console.WriteLine("Press any key to continue...");
@@ -102,8 +112,9 @@ namespace MiniAdventureGame
                         player.DisplayStats(player);
                         break;
                     case 4:
-                        Console.WriteLine("You exit the dungeon.");
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("Thanks for playing!");
+                        Console.ResetColor();
                         gameRunning = false;
                         break;
                     default:
